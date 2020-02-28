@@ -204,13 +204,6 @@ for (FLAG,curr_train_ratio) in [(1,0.1)]:
                     train_data_index.append(a[j])
             train_data_index = np.array(train_data_index)
 
-            # val_data_index = []
-            # for c in range(val_rand_idx.shape[0]):
-            #     a = val_rand_idx[c]
-            #     for j in range(a.shape[0]):
-            #         val_data_index.append(a[j])
-            # val_data_index = np.array(val_data_index)
-            
             train_data_index = set(train_data_index)
             # val_data_index = set(val_data_index)
             all_data_index = [i for i in range(len(gt_reshape))]
@@ -329,12 +322,10 @@ for (FLAG,curr_train_ratio) in [(1,0.1)]:
             
             # 第五层 spatial block
             h_conv5 = SSConv(h_conv4, spatial_block_chanels)
-            # h_conv5_dc = h_conv5
             h_conv5 = tf.concat([h_conv5, h_conv4], axis=-1)  # 拼接后的维度应该为496维
             
             # 第六层 spatial block
             h_conv6 = SSConv(h_conv5, spatial_block_chanels)
-            # h_conv6_dc = h_conv6
             
             h_conv6 = tf.concat([h_conv6, h_conv5], axis=-1)  # 拼接后的维度应该为504维
             # h_conv6 = tf.layers.max_pooling2d(h_conv6, [5, 5], [1, 1], 'same')
@@ -348,12 +339,12 @@ for (FLAG,curr_train_ratio) in [(1,0.1)]:
             h_fc_maxpool = h_fc
             
             # 加权损失
-            h_fc_pool = tf.nn.softmax(h_fc_maxpool, -1)  # 损失使用minpooling#################################
+            h_fc_pool = tf.nn.softmax(h_fc_maxpool, -1) 
             h_fc_pool_reshape = tf.reshape(h_fc_pool, [m * n, class_count])
             real_labels = tf.reshape(real_label, [m * n, class_count])
             ##  动态权重
             we = -tf.multiply(real_labels,
-                              tf.log(h_fc_pool_reshape))  # -tf.multiply( (1-real_labels),tf.log(1-h_fc_pool_reshape))#每一个点的损失
+                              tf.log(h_fc_pool_reshape))
             
             Original_Loss=tf.reduce_sum(we)/tf.reduce_sum(real_labels)#用于计算原始的loss
             
