@@ -4,6 +4,7 @@ A new network algorithm for HSI classification
 Environment requires: GPU >= GTX1080Ti (11GB Memory)
 
 SSCDenseNet：一种空-谱卷积稠密网络的高光谱图像分类算法
+
 SSCDenseNet: A Spectral-Spatial Convolutional Dense Network for Hyperspectral Image Classification
 
 摘要:基于深度学习的高光谱遥感图像地物分类是目前研究的热点。但由于其参数规模大以及结构复杂，深度网络通常需要大量训练样本和较长训练时间，如何在小规模样本下建立深度学习监督分类模型是需要解决的关键问题。本文提出了一种小规模样本下高光谱图像分类的空-谱卷积稠密网络算法，称为SSCDenseNet，其包含三种新颖的架构策略：1）空-谱分离卷积，即采取光谱维一维卷积和空间维二维卷积的分离卷积结构构成隐层单元，并通过多个隐层单元堆叠构造深度网络；2）隐层单元中使用批归一化，减少数据协方差漂移及加速网络训练；3）隐层单元间构建稠密连接，缓解梯度消失问题并实现特征复用。通过Indian Pines、Pavia University与Salinas数据集进行综合测评，表明该方法优于若干最新深度学习方法，特别在小规模样本下具有优异的分类性能。	
